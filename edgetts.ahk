@@ -104,6 +104,9 @@ edgetts_tts_mutual_main(*) {
 }
 edgettsgui.AddButton("xp w60 hp","预览文件").OnEvent("Click",edgetts_mutal_open_explore)
 edgetts_mutal_open_explore(*){
-
+    ControlGetText("edit2","edgetts")
+    
 }
 edgettsgui.Show("h600 w1000")
+
+^q::edgetts_exit()
