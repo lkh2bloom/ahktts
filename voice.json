@@ -1,0 +1,167 @@
+[
+  {
+    "voice": "晓晨-多语言",
+    "gender": "Female",
+    "style": "zh-CN-XiaochenMultilingualNeural"
+  },
+  {
+    "voice": "晓晨",
+    "gender": "Female",
+    "style": "zh-CN-XiaochenNeural"
+  },
+  {
+    "voice": "晓涵",
+    "gender": "Female",
+    "style": "zh-CN-XiaohanNeural"
+  },
+  {
+    "voice": "小萌",
+    "gender": "Female",
+    "style": "zh-CN-XiaomengNeural"
+  },
+  {
+    "voice": "小沫",
+    "gender": "Female",
+    "style": "zh-CN-XiaomoNeural"
+  },
+  {
+    "voice": "小秋",
+    "gender": "Female",
+    "style": "zh-CN-XiaoqiuNeural"
+  },
+  {
+    "voice": "小柔",
+    "gender": "Female",
+    "style": "zh-CN-XiaorouNeural"
+  },
+  {
+    "voice": "小瑞",
+    "gender": "Female",
+    "style": "zh-CN-XiaoruiNeural"
+  },
+  {
+    "voice": "小霜",
+    "gender": "Female",
+    "style": "zh-CN-XiaoshuangNeural"
+  },
+  {
+    "voice": "小小-支持方言",
+    "gender": "Female",
+    "style": "zh-CN-XiaoxiaoDialectsNeural"
+  },
+  {
+    "voice": "小小-多语言",
+    "gender": "Female",
+    "style": "zh-CN-XiaoxiaoMultilingualNeural"
+  },
+  {
+    "voice": "小小",
+    "gender": "Female",
+    "style": "zh-CN-XiaoxiaoNeural"
+  },
+  {
+    "voice": "小妍",
+    "gender": "Female",
+    "style": "zh-CN-XiaoyanNeural"
+  },
+  {
+    "voice": "小易",
+    "gender": "Female",
+    "style": "zh-CN-XiaoyiNeural"
+  },
+  {
+    "voice": "小优",
+    "gender": "Female",
+    "style": "zh-CN-XiaoyouNeural"
+  },
+  {
+    "voice": "小雨-多语言",
+    "gender": "Female",
+    "style": "zh-CN-XiaoyuMultilingualNeural"
+  },
+  {
+    "voice": "小珍",
+    "gender": "Female",
+    "style": "zh-CN-XiaozhenNeural"
+  },
+  {
+    "voice": "云风",
+    "gender": "Male",
+    "style": "zh-CN-YunfengNeural"
+  },
+  {
+    "voice": "云昊",
+    "gender": "Male",
+    "style": "zh-CN-YunhaoNeural"
+  },
+  {
+    "voice": "云间",
+    "gender": "Male",
+    "style": "zh-CN-YunjianNeural"
+  },
+  {
+    "voice": "云杰",
+    "gender": "Male",
+    "style": "zh-CN-YunjieNeural"
+  },
+  {
+    "voice": "云熙",
+    "gender": "Male",
+    "style": "zh-CN-YunxiNeural"
+  },
+  {
+    "voice": "云霞",
+    "gender": "Male",
+    "style": "zh-CN-YunxiaNeural"
+  },
+  {
+    "voice": "云霄-多语言",
+    "gender": "Male",
+    "style": "zh-CN-YunxiaoMultilingualNeural"
+  },
+  {
+    "voice": "云阳",
+    "gender": "Male",
+    "style": "zh-CN-YunyangNeural"
+  },
+  {
+    "voice": "云野",
+    "gender": "Male",
+    "style": "zh-CN-YunyeNeural"
+  },
+  {
+    "voice": "云艺-多语言",
+    "gender": "Male",
+    "style": "zh-CN-YunyiMultilingualNeural"
+  },
+  {
+    "voice": "云泽",
+    "gender": "Male",
+    "style": "zh-CN-YunzeNeural"
+  },
+  {
+    "voice": "河南-云登",
+    "gender": "Male",
+    "style": "zh-CN-henan-YundengNeural"
+  },
+  {
+    "voice": "辽宁-小贝",
+    "gender": "Female",
+    "style": "zh-CN-liaoning-XiaobeiNeural"
+  },
+  {
+    "voice": "陕西-小妮",
+    "gender": "Female",
+    "style": "zh-CN-shaanxi-XiaoniNeural"
+  },
+  {
+    "voice": "山东-云想",
+    "gender": "Male",
+    "style": "zh-CN-shandong-YunxiangNeural"
+  },
+  {
+    "voice": "四川-云熙",
+    "gender": "Male",
+    "style": "zh-CN-sichuan-YunxiNeural"
+  }
+]

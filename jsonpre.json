@@ -1,0 +1,167 @@
+[
+  {
+    "voice": "zh-CN-XiaochenMultilingualNeural",
+    "gender": "Female",
+    "style": ["Friendly", "Casual", "Upbeat"]
+  },
+  {
+    "voice": "zh-CN-XiaochenNeural",
+    "gender": "Female",
+    "style": ["Friendly", "Casual", "Upbeat"]
+  },
+  {
+    "voice": "zh-CN-XiaohanNeural",
+    "gender": "Female",
+    "style": ["Gentle", "Warm", "Emotional"]
+  },
+  {
+    "voice": "zh-CN-XiaomengNeural",
+    "gender": "Female",
+    "style": ["Gentle", "Upbeat", "Friendly"]
+  },
+  {
+    "voice": "zh-CN-XiaomoNeural",
+    "gender": "Female",
+    "style": ["Deep", "Casual", "Calm"]
+  },
+  {
+    "voice": "zh-CN-XiaoqiuNeural",
+    "gender": "Female",
+    "style": ["Calm", "Engaging", "Soothing"]
+  },
+  {
+    "voice": "zh-CN-XiaorouNeural",
+    "gender": "Female",
+    "style": ["Cheerful", "Engaging", "Pleasant"]
+  },
+  {
+    "voice": "zh-CN-XiaoruiNeural",
+    "gender": "Female",
+    "style": ["Confident", "Emotional", "Hoarse"]
+  },
+  {
+    "voice": "zh-CN-XiaoshuangNeural",
+    "gender": "Female",
+    "style": ["Crisp", "Cheerful", "Bright"]
+  },
+  {
+    "voice": "zh-CN-XiaoxiaoDialectsNeural",
+    "gender": "Female",
+    "style": ["Warm", "Animated", "Bright"]
+  },
+  {
+    "voice": "zh-CN-XiaoxiaoMultilingualNeural",
+    "gender": "Female",
+    "style": ["Warm", "Animated", "Bright"]
+  },
+  {
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "gender": "Female",
+    "style": ["Warm", "Well-Rounded", "Animated"]
+  },
+  {
+    "voice": "zh-CN-XiaoyanNeural",
+    "gender": "Female",
+    "style": ["Warm", "Gentle", "Empathetic"]
+  },
+  {
+    "voice": "zh-CN-XiaoyiNeural",
+    "gender": "Female",
+    "style": ["Bright", "Emotional", "Engaging"]
+  },
+  {
+    "voice": "zh-CN-XiaoyouNeural",
+    "gender": "Female",
+    "style": ["Crisp", "Cheerful", "Bright"]
+  },
+  {
+    "voice": "zh-CN-XiaoyuMultilingualNeural",
+    "gender": "Female",
+    "style": ["Deep", "Confident", "Casual"]
+  },
+  {
+    "voice": "zh-CN-XiaozhenNeural",
+    "gender": "Female",
+    "style": ["Calm", "Serious", "Confident"]
+  },
+  {
+    "voice": "zh-CN-YunfengNeural",
+    "gender": "Male",
+    "style": ["Confident", "Animated", "Emotional"]
+  },
+  {
+    "voice": "zh-CN-YunhaoNeural",
+    "gender": "Male",
+    "style": ["Warm", "Soft", "Upbeat"]
+  },
+  {
+    "voice": "zh-CN-YunjianNeural",
+    "gender": "Male",
+    "style": ["Deep", "Casual", "Engaging"]
+  },
+  {
+    "voice": "zh-CN-YunjieNeural",
+    "gender": "Male",
+    "style": ["Casual", "Confident", "Warm"]
+  },
+  {
+    "voice": "zh-CN-YunxiNeural",
+    "gender": "Male",
+    "style": ["Bright", "Animated", "Cheerful"]
+  },
+  {
+    "voice": "zh-CN-YunxiaNeural",
+    "gender": "Male",
+    "style": ["Cheerful", "Friendly", "Emotional"]
+  },
+  {
+    "voice": "zh-CN-YunxiaoMultilingualNeural",
+    "gender": "Male",
+    "style": ["Gentle", "Casual", "Friendly"]
+  },
+  {
+    "voice": "zh-CN-YunyangNeural",
+    "gender": "Male",
+    "style": ["Formal", "Deep", "Calm"]
+  },
+  {
+    "voice": "zh-CN-YunyeNeural",
+    "gender": "Male",
+    "style": ["Casual", "Deep", "Calm"]
+  },
+  {
+    "voice": "zh-CN-YunyiMultilingualNeural",
+    "gender": "Male",
+    "style": ["Gentle", "Casual", "Friendly"]
+  },
+  {
+    "voice": "zh-CN-YunzeNeural",
+    "gender": "Male",
+    "style": ["Deep", "Confident", "Formal"]
+  },
+  {
+    "voice": "zh-CN-henan-YundengNeural",
+    "gender": "Male",
+    "style": ["Casual", "Friendly", "Animated"]
+  },
+  {
+    "voice": "zh-CN-liaoning-XiaobeiNeural",
+    "gender": "Female",
+    "style": ["Friendly", "Casual", "Gentle"]
+  },
+  {
+    "voice": "zh-CN-shaanxi-XiaoniNeural",
+    "gender": "Female",
+    "style": ["Confident", "Engaging", "Casual"]
+  },
+  {
+    "voice": "zh-CN-shandong-YunxiangNeural",
+    "gender": "Male",
+    "style": ["Casual", "Animated", "Strong"]
+  },
+  {
+    "voice": "zh-CN-sichuan-YunxiNeural",
+    "gender": "Male",
+    "style": ["Casual", "Animated", "Gentle"]
+  }
+]
