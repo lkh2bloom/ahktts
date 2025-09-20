@@ -1,9 +1,23 @@
 #Include <JSON>
-; 添加脚本记忆主播功能
-; 文件禁用特殊符号在文件名中的过滤
+; 添加脚本记忆主播功能 测试表现第一个主播就很好了
+; 文件禁用特殊符号在文件名中的过滤，不考虑使用该方式进行
+; 杀死已经运行的进程，以免测试时候按了多个进程不好关闭。
+; 使用process关闭 打开的run进程 就在run进程hide后面的varef参数及是回调id
+; ProcessExist 判断进程是否还存在然后再进行close即可。
+
+;开始进行自己的脚本编写
+; 写一个文件名快速转化脚本用来引用
+
+edgetts_playstr :=
+    (
+        "欢迎体验 TTS 音质测试！123，do re mi，一二三，走起～        多音字测试：银行门口，他行色匆匆。        儿化音：这儿有份儿小吃，味儿倍儿棒！        轻声与停顿：好的，我们——稍等，马上回来。        连续语流：四是四，十是十，十四是十四，四十是四十。        数字+单位：2025年9月20日，气温24.5℃，风速3.2m/s。        英文缩写：USB、AI、TTS、NASA，读得清楚吗？        标点语气：真的？假的！哦……原来如此。        长句挑战：他指出，尽管当前全球经济复苏仍面临诸多不确定因素，但各国通过加强多边合作、推动绿色转型，有望实现更加包容和可持续的增长。        情绪模拟：（平静）今天天气不错。（兴奋）哇！彩虹！（悲伤）可惜，它转瞬即逝……        结尾测试：谢谢聆听，再见！Goodbye～
+        "
+    )
+edgetts_processlist:=[]
+; MsgBox edgetts_playstr
 edgettsgui := Gui()
 edgettsgui.SetFont("s14")
-edgettsgui.MarginX := 2
+edgettsgui.MarginX := 3
 edgettsgui.MarginY := 5
 edgettsgui.Opt("+OwnDialogs")
 edgettsgui.OnEvent("Escape", edgetts_exit)
@@ -32,7 +46,7 @@ edge_dropf(GuiObj, GuiCtrlObj, FileArray, X, Y) {
     }
 }
 edgettsgui.AddGroupBox("w930 h50")
-edgettsgui.AddEdit("yp15 xp10 w400", "拖入文件")
+edgettsgui.AddEdit("yp15 xp10 w400 h30", edgetts_playstr)
 edgettsgui.AddButton("yp w20 h25  ", "…").OnEvent("Click", edgetts_fileopen)
 edgetts_fileopen(*) {
     tempfilename := FileSelect(, , "浏览文件", "TEXT(*.txt)")
@@ -48,26 +62,32 @@ for i in JSON.parse(edgevoicjson) {
     edgetts_command_voicelist.Push(i["style"])
     edgetts_map[(i["gender"] = "Male" ? i["voice"] . "-" . "(男)" : i["voice"] . "-" . "(女)")] := i["style"]
     ; MsgBox edgetts_commandvoicelist[1]
+    ; MsgBox edgetts_map[]
 }
-edgettsgui.AddDropDownList("yp w200 choose1", edgetts_voicelist)
-; .OnEvent("Change",(*)=>MsgBox(ControlGetText("combobox1","edgetts"))) 上述控件的测试代码，照例隐藏
+edgettsgui.AddDropDownList("yp w200 choose1", edgetts_voicelist).OnEvent("Change", edgetts_droplistfun)
+edgetts_droplistfun(*) {
+    ControlSetText('edge-playback -t "' edgetts_playstr '" -v ' edgetts_map[ControlGetText("combobox1", "edgetts")], "edit3", "edgetts")
+}
+;上述控件的测试代码，照例隐藏
 ; MsgBox edgetts_voicelist.Length
 edgettsgui.AddButton("yp w60 hp", "测试").OnEvent("Click", edgetts_play)
 edgetts_play(*) {
-    ; MsgBox ControlGetText("combobox1","edgetts")
-    Run('cmd /c edge-playback -t "' ControlGetText("edit1", "edgetts") '" -v ' edgetts_map[ControlGetText("combobox1", "edgetts")], , "hide")
+    ; MsgBox edgetts_map[ControlGetText("combobox1", "edgetts")]
+    Run('cmd /c edge-playback -t "' RegExReplace(ControlGetText("edit1", "edgetts"), "\R") '" -v ' edgetts_map[ControlGetText("combobox1", "edgetts")], , "hide",&proid)
+    edgetts_processlist.Push(proid)
+    ; Run('cmd /c edge-playback -t "你好 "')
 }
 edgettsgui.AddButton("yp hp w60", "转化").OnEvent("Click", edgetts_tts_single_main)
 edgettsgui.AddCheckbox("yp hp", "srt") ;button4
 edgettsgui.AddButton("yp hp", "预览").OnEvent("Click", edgetts_open_explore)
 edgetts_open_explore(*) {
-    if ControlGetText("edit1","edgetts")!=""{
-        try Run('explore ' ControlGetText("edit1" ,"edgetts"))
+    if ControlGetText("edit1", "edgetts") != "" {
+        try Run('explore ' ControlGetText("edit1", "edgetts"))
     } else
         Run('explore ') ;添加一个空格代表打开当前工作目录文件
 }
 edgetts_tts_single_main(*) {
-    edge_edit_text := ControlGetText("edit1", "edgetts")
+    edge_edit_text := RegExReplace(ControlGetText("edit1", "edgetts"), "\R")
     if ControlGetChecked("button3", "edgetts")
         edge_writ_srt_string := " " . edge_edit_text
     if InStr(edge_edit_text, ".txt") {
@@ -83,9 +103,9 @@ edgetts_tts_single_main(*) {
     }
     if InStr(edge_edit_text, ".txt") {
         ; MsgBox "ok"
-        Run("cmd /k edge-tts " "-f " edge_edit_text ".txt " . "--write-subtitles " filename ".srt")
+        Run('cmd /c edge-tts  -f ' edge_edit_text '.txt ' . '--write-subtitles ' filename '.srt -v ' edgetts_map[ControlGetText("combobox1","edgetts")] '',,"hide",&proid)
     } else {
-        Run('cmd /k edge-tts -t "' edge_edit_text '"' filename ".txt " "--write-subtitles " filename ".srt")
+        Run('cmd /c edge-tts -t "' edge_edit_text '"' filename '.txt  --write-subtitles ' filename '.srt -v ' edgetts_map[ControlGetText("combobox1","edgetts")],,"hide",&proid)
     }
     ; "edge-tts [-h] [-t TEXT] [-f FILE] [-v VOICE] [-l] [--rate RATE] [--volume VOLUME] [--pitch PITCH] [--write-media WRITE_MEDIA] [--write-subtitles WRITE_SUBTITLES] [--proxy PROXY]"
 }
@@ -95,18 +115,59 @@ edgetts_tts_single_main(*) {
 
 
 edgettsgui.AddGroupBox("xs  w900 h330")
-edgettsgui.AddEdit("yp20 xp10 w820 h300 Border")
+edgettsgui.AddEdit("yp20 xp10 w820 h300 Border ReadOnly -VScroll")
 edgettsgui.AddButton("yp w60 h40", "批量处理").OnEvent("Click", edgetts_tts_mutual_main)
 
 
 edgetts_tts_mutual_main(*) {
-    
-}
-edgettsgui.AddButton("xp w60 hp","预览文件").OnEvent("Click",edgetts_mutal_open_explore)
-edgetts_mutal_open_explore(*){
-    ControlGetText("edit2","edgetts")
-    
-}
-edgettsgui.Show("h600 w1000")
+    if ControlGetText("edit2", "edgetts") {
+        for i in StrSplit(ControlGetText("edit2", "edgetts"), "`n") {
 
-^q::edgetts_exit()
+        }
+
+    }
+    ; 检测编辑框是否可只读 使用readonly可以只读，依然可以复制选中内容
+    ; 判断进程状态码，判断edit编辑框运行行，
+    judge_status(cmdLine) {
+        cmdLine ; ← 改成你的命令
+        shell := ComObject("WScript.Shell")
+        exec := shell.Exec(cmdLine)
+
+        ; 实时读取子进程输出
+        ; output := ''
+        while exec.Status = 0 {               ; 0 = 仍在运行
+            ; if !exec.StdOut.AtEndOfStream
+            ; output .= exec.StdOut.ReadLine() "`n"
+            ; Sleep(50)
+        }
+        ; 收尾：把剩余输出读干净
+        ; while !exec.StdOut.AtEndOfStream
+        ; output .= exec.StdOut.ReadLine() "`n"
+
+        ; exitCode := exec.ExitCode            ; 拿到退出码
+        ; ToolTip("命令已结束`n退出码: " exitCode, 200, 200)
+        ; SetTimer(() => ToolTip(), -1500)     ; 1.5 秒后自动消失
+    }
+}
+
+edgettsgui.AddButton("xp w60 hp", "预览文件").OnEvent("Click", edgetts_mutal_open_explore)
+edgetts_mutal_open_explore(*) {
+    ControlGetText("edit2", "edgetts")
+}
+edgettsgui.AddButton("xp w60 hp", "关闭播放进程").OnEvent("click",edgetts_kill_process)
+edgetts_kill_process(*){
+    for i in edgetts_processlist{
+        if ProcessExist(i){
+            ProcessClose(i)
+        }
+    }
+    edgetts_processlist:=[]
+
+}
+; ****************************命令行*****************************
+edgettsgui.AddGroupBox("xs w950 h50")
+edgettsgui.AddEdit("xp10 yp15 w800  vscroll") ;edit 3
+edgettsgui.AddButton("w120 yp hp", "编辑命令行")
+
+edgettsgui.Show("h600 w1000")
+^q:: edgetts_exit()
