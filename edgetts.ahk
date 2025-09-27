@@ -1,14 +1,26 @@
 #Include <JSON>
-; 添加脚本记忆主播功能 测试表现第一个主播就很好了
+; new task 添加脚本记忆主播功能 测试表现第一个主播就很好了
 ; 文件禁用特殊符号在文件名中的过滤，不考虑使用该方式进行
 ; 杀死已经运行的进程，以免测试时候按了多个进程不好关闭。
 ; 使用process关闭 打开的run进程 就在run进程hide后面的varef参数及是回调id
 ; ProcessExist 判断进程是否还存在然后再进行close即可。
 
+; 尝试考虑是否加入菜单栏选项，以及在常用库中添加菜单选项预设库。
+
 ;开始进行自己的脚本编写
 ; 写一个文件名快速转化脚本用来引用
 ;代码写代码，快速写完某些测试开头等脚本，命名为规范操作。
 
+; new task：命令行标准化，以便于后续增修预设
+
+; 单行ini用命令以及初始化************************************************
+; IniWrite(0, "set.ini", "setting", "model")
+; IniWrite("", "set.ini", "model1")
+; IniWrite("", "set.ini", "model2")
+; IniWrite("", "set.ini", "model3")
+; IniDelete("set.ini","setting","model")
+; IniRead("set.ini", "", , "")
+; *********************************************************************
 edgetts_playstr :=
     (
         "欢迎体验 TTS 音质测试！123，do re mi，一二三，走起～        多音字测试：银行门口，他行色匆匆。        儿化音：这儿有份儿小吃，味儿倍儿棒！        轻声与停顿：好的，我们——稍等，马上回来。        连续语流：四是四，十是十，十四是十四，四十是四十。        数字+单位：2025年9月20日，气温24.5℃，风速3.2m/s。        英文缩写：USB、AI、TTS、NASA，读得清楚吗？        标点语气：真的？假的！哦……原来如此。        长句挑战：他指出，尽管当前全球经济复苏仍面临诸多不确定因素，但各国通过加强多边合作、推动绿色转型，有望实现更加包容和可持续的增长。        情绪模拟：（平静）今天天气不错。（兴奋）哇！彩虹！（悲伤）可惜，它转瞬即逝……        结尾测试：谢谢聆听，再见！Goodbye～
@@ -171,11 +183,50 @@ edgetts_kill_process(*) {
     }
     ; edgetts_processlist := []
 }
+; **************************************模板*********************
+edgettsgui.AddGroupBox("yp-100 xp70 w70 h320")
+edgettsgui.AddDDL("yp15 xp5  w60 choose1", ["设1", "设2", "设3"]).OnEvent("Change", edgetts_models)
+edgetts_models(*) {
+    IniWrite(1, "set.ini", "setting", "model")
+    switch ControlGetText("combobox2", "edgetts") {
+        case "设1":
+            IniWrite(1, "set.ini", "setting", "model")
+            ; MsgBox "Ok"
+
+        case "设2":
+            IniWrite(2, "set.ini", "setting", "model")
+            ; MsgBox "Ok2"
+        case "设3":
+            IniWrite(3, "set.ini", "setting", "model")
+            ; MsgBox "Ok3"
+
+        default: MsgBox "Okd"
+    }
+}
+edgettsgui.AddButton("xp yp245 w60 ", "存为当前预设").OnEvent("Click", edgetts_save_model)
+edgetts_save_model(*) {
+    ; 切分当前命令行或者解析当前可以被读取进入命令行的东西，比如说编辑框3，将它保存为预设，使用，所以预设中应该以显示命令行为主。
+}
+; ******************************************************************
+
 ; ****************************命令行*****************************
 edgettsgui.AddGroupBox("xs w950 h50")
 ;预警，tts测试用长文本！！！！！！！！！！
-edgettsgui.AddEdit("xp10 yp15 w800  vscroll h30 ",'"edge-playback -t "欢迎体验 TTS 音质测试！123，do re mi，一二三，走起～        多音字测试：银行门口，他行色匆匆。        儿化音：这儿有份儿小吃，味儿倍儿棒！        轻声与停顿：好的，我们——稍等，马上回来。        连续语流：四是四，十是十，十四是十四，四十是四十。        数字+单位：2025年9月20日，气温24.5℃，风速3.2m/s。        英文缩写：USB、AI、TTS、NASA，读得清楚吗？        标点语气：真的？假的！哦……原来如此。        长句挑战：他指出，尽管当前全球经济复苏仍面临诸多不确定因素，但各国通过加强多边合作、推动绿色转型，有望实现更加包容和可持续的增长。        情绪模拟：（平静）今天天气不错。（兴奋）哇！彩虹！（悲伤）可惜，它转瞬即逝……        结尾测试：谢谢聆听，再见！Goodbye～" -v zh-CN-XiaochenMultilingualNeural"') ;edit 3
+edgettsgui.AddEdit("xp10 yp15 w800  vscroll h30 ReadOnly", '"edge-playback -t "欢迎体验 TTS 音质测试！123，do re mi，一二三，走起～        多音字测试：银行门口，他行色匆匆。        儿化音：这儿有份儿小吃，味儿倍儿棒！        轻声与停顿：好的，我们——稍等，马上回来。        连续语流：四是四，十是十，十四是十四，四十是四十。        数字+单位：2025年9月20日，气温24.5℃，风速3.2m/s。        英文缩写：USB、AI、TTS、NASA，读得清楚吗？        标点语气：真的？假的！哦……原来如此。        长句挑战：他指出，尽管当前全球经济复苏仍面临诸多不确定因素，但各国通过加强多边合作、推动绿色转型，有望实现更加包容和可持续的增长。        情绪模拟：（平静）今天天气不错。（兴奋）哇！彩虹！（悲伤）可惜，它转瞬即逝……        结尾测试：谢谢聆听，再见！Goodbye～" -v zh-CN-XiaochenMultilingualNeural"') ;edit 3
 edgettsgui.AddButton("w120 yp hp", "编辑命令行")
+
 
 edgettsgui.Show("h600 w1000")
 ^q:: edgetts_exit()
+f1:: {
+    ahktts_help_txt := "
+    (
+    快捷键操作：`n Escape & ctrl+q ：退出脚本
+    本项目开源地址：https://github.com/lkh2bloom/ahktts
+        "12346test"
+)"
+    ToolTip ahktts_help_txt
+    ; SetTimer(, , -1)
+    Sleep 500
+    ToolTip
+}
