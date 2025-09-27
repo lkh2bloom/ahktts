@@ -7,13 +7,14 @@
 
 ;开始进行自己的脚本编写
 ; 写一个文件名快速转化脚本用来引用
+;代码写代码，快速写完某些测试开头等脚本，命名为规范操作。
 
 edgetts_playstr :=
     (
         "欢迎体验 TTS 音质测试！123，do re mi，一二三，走起～        多音字测试：银行门口，他行色匆匆。        儿化音：这儿有份儿小吃，味儿倍儿棒！        轻声与停顿：好的，我们——稍等，马上回来。        连续语流：四是四，十是十，十四是十四，四十是四十。        数字+单位：2025年9月20日，气温24.5℃，风速3.2m/s。        英文缩写：USB、AI、TTS、NASA，读得清楚吗？        标点语气：真的？假的！哦……原来如此。        长句挑战：他指出，尽管当前全球经济复苏仍面临诸多不确定因素，但各国通过加强多边合作、推动绿色转型，有望实现更加包容和可持续的增长。        情绪模拟：（平静）今天天气不错。（兴奋）哇！彩虹！（悲伤）可惜，它转瞬即逝……        结尾测试：谢谢聆听，再见！Goodbye～
         "
     )
-edgetts_processlist:=[]
+edgetts_processlist := []
 ; MsgBox edgetts_playstr
 edgettsgui := Gui()
 edgettsgui.SetFont("s14")
@@ -73,7 +74,7 @@ edgetts_droplistfun(*) {
 edgettsgui.AddButton("yp w60 hp", "测试").OnEvent("Click", edgetts_play)
 edgetts_play(*) {
     ; MsgBox edgetts_map[ControlGetText("combobox1", "edgetts")]
-    Run('cmd /c edge-playback -t "' RegExReplace(ControlGetText("edit1", "edgetts"), "\R") '" -v ' edgetts_map[ControlGetText("combobox1", "edgetts")], , "hide",&proid)
+    Run('cmd /c edge-playback -t "' RegExReplace(ControlGetText("edit1", "edgetts"), "\R") '" -v ' edgetts_map[ControlGetText("combobox1", "edgetts")], , "hide", &proid)
     edgetts_processlist.Push(proid)
     ; Run('cmd /c edge-playback -t "你好 "')
 }
@@ -103,9 +104,9 @@ edgetts_tts_single_main(*) {
     }
     if InStr(edge_edit_text, ".txt") {
         ; MsgBox "ok"
-        Run('cmd /c edge-tts  -f ' edge_edit_text '.txt ' . '--write-subtitles ' filename '.srt -v ' edgetts_map[ControlGetText("combobox1","edgetts")] '',,"hide",&proid)
+        Run('cmd /c edge-tts  -f ' edge_edit_text '.txt ' . '--write-subtitles ' filename '.srt -v ' edgetts_map[ControlGetText("combobox1", "edgetts")] '', , "hide", &proid)
     } else {
-        Run('cmd /c edge-tts -t "' edge_edit_text '"' filename '.txt  --write-subtitles ' filename '.srt -v ' edgetts_map[ControlGetText("combobox1","edgetts")],,"hide",&proid)
+        Run('cmd /c edge-tts -t "' edge_edit_text '"' filename '.txt  --write-subtitles ' filename '.srt -v ' edgetts_map[ControlGetText("combobox1", "edgetts")], , "hide", &proid)
     }
     ; "edge-tts [-h] [-t TEXT] [-f FILE] [-v VOICE] [-l] [--rate RATE] [--volume VOLUME] [--pitch PITCH] [--write-media WRITE_MEDIA] [--write-subtitles WRITE_SUBTITLES] [--proxy PROXY]"
 }
@@ -154,19 +155,26 @@ edgettsgui.AddButton("xp w60 hp", "预览文件").OnEvent("Click", edgetts_mutal
 edgetts_mutal_open_explore(*) {
     ControlGetText("edit2", "edgetts")
 }
-edgettsgui.AddButton("xp w60 hp", "关闭播放进程").OnEvent("click",edgetts_kill_process)
-edgetts_kill_process(*){
-    for i in edgetts_processlist{
-        if ProcessExist(i){
-            ProcessClose(i)
+edgettsgui.AddButton("xp w60 ", "关闭播放进程").OnEvent("click", edgetts_kill_process)
+edgetts_kill_process(*) {
+    ; edgetts_processlist := []
+    global edgetts_processlist
+    for i in edgetts_processlist {
+        if ProcessExist(i) {
+            ; MsgBox i
+            ; ProcessClose(i)
+            ; taskkill /PID <进程ID> /F
+            Run('*RunAs cmd.exe /c "taskkill /PID ' i ' /F"')
+            ; 同前，二者都无法关闭已经打开的播放进程，推测是使用了另外一个播放进程，所以当前进程无法被终止。
+            ; Run('*RunAs ' 'cmd.exe "taskkill /PID /F"')
         }
     }
-    edgetts_processlist:=[]
-
+    ; edgetts_processlist := []
 }
 ; ****************************命令行*****************************
 edgettsgui.AddGroupBox("xs w950 h50")
-edgettsgui.AddEdit("xp10 yp15 w800  vscroll") ;edit 3
+;预警，tts测试用长文本！！！！！！！！！！
+edgettsgui.AddEdit("xp10 yp15 w800  vscroll h30 ",'"edge-playback -t "欢迎体验 TTS 音质测试！123，do re mi，一二三，走起～        多音字测试：银行门口，他行色匆匆。        儿化音：这儿有份儿小吃，味儿倍儿棒！        轻声与停顿：好的，我们——稍等，马上回来。        连续语流：四是四，十是十，十四是十四，四十是四十。        数字+单位：2025年9月20日，气温24.5℃，风速3.2m/s。        英文缩写：USB、AI、TTS、NASA，读得清楚吗？        标点语气：真的？假的！哦……原来如此。        长句挑战：他指出，尽管当前全球经济复苏仍面临诸多不确定因素，但各国通过加强多边合作、推动绿色转型，有望实现更加包容和可持续的增长。        情绪模拟：（平静）今天天气不错。（兴奋）哇！彩虹！（悲伤）可惜，它转瞬即逝……        结尾测试：谢谢聆听，再见！Goodbye～" -v zh-CN-XiaochenMultilingualNeural"') ;edit 3
 edgettsgui.AddButton("w120 yp hp", "编辑命令行")
 
 edgettsgui.Show("h600 w1000")
