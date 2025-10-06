@@ -12,7 +12,9 @@
 #Include <CGdip>
 #Include <wincapture\wincapture>
 #Include <RapidOcr\RapidOcr>
-#Include <map>
+#Include <WinAPI\Kernel32>
+; #Include <map> 忘记来自哪个库了 到时候用笔记本看眼库 感觉这个库应该会很好用
+
 
 ;函数体
 if A_ScriptFullPath = A_LineFile {
@@ -26,8 +28,16 @@ if A_ScriptFullPath = A_LineFile {
     tts_workflow.AddRadio("","临时文件模式")
     tts_workflow.AddText("yp","格式复杂使用这个")
     ;连续radio视为一个排他组合框
-    tts_workflow.AddRadio()
-
+    tts_workflow.AddRadio("xs")
+    tts_workflow.AddButton("yp ","go").OnEvent("Click",workflow_go)
+    workflow_go(*){
+        if ControlGetChecked("button1"){
+            ocr_clip()
+            ; MsgBox "ok"
+        }else if ControlGetChecked("button2"){
+            
+        }
+    }
     ;其classnn编码也是button标识
     tts_workflow.Show("h" A_ScreenHeight*0.6 "w" A_ScreenWidth*0.6)
     ; 主要运行函数体
@@ -42,8 +52,14 @@ if A_ScriptFullPath = A_LineFile {
         CGdip.Shutdown()
         try temptxt := RegExReplace(RegExReplace(RegExReplace(temptxt, "(([.!?:;。！？，：；]))(\R)", "$1#PRESERVE#"), "\R"), "#PRESERVE#", ",")
         Run('cmd /k edge-playback -t"' temptxt '" -v zh-CN-XiaochenMultilingualNeural --rate="+20%"') ;使用rate增加减少播放速率 
+        ; 同时可以调节声音，但一般来说不需要调节声音。
         ;同理必然存在情感色彩参数调节，情感色彩只能通过Python调节，无法通过来进行。
         ; try A_Clipboard := ocr.ocr_from_bitmapdata(BitmapBuffer.loadGpBitmap(CGdip.Bitmap.FromClipboard()).info)
+    }
+    ocr_file(*){
+        temp:=FileOpen() A_Clipboard
+        ; 建立一个新的临时文件来读取文本。文件名固定但是每次需要重写文件
+        Run('cmd /k edge-playback -f ')
     }
 
 }
