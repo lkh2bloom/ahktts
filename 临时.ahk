@@ -11,5 +11,4 @@ WheelUp::{
     MouseGetPos(&x,&y)
     Click "1245 1248"
     MouseMove x,y
-
 }

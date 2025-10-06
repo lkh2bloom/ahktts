@@ -1,4 +1,10 @@
+
 #Include <JSON>
+#SingleInstance Force
+ ;函数体
+if A_ScriptFullPath = A_LineFile {
+     ; 主要运行函数体
+}
 ; new task 添加脚本记忆主播功能 测试表现第一个主播就很好了
 ; 文件禁用特殊符号在文件名中的过滤，不考虑使用该方式进行
 ; 杀死已经运行的进程，以免测试时候按了多个进程不好关闭。
@@ -29,7 +35,7 @@ edgetts_playstr :=
 edgetts_processlist := []
 ; MsgBox edgetts_playstr
 edgettsgui := Gui()
-edgettsgui.SetFont("s14")
+edgettsgui.SetFont("s" A_ScreenHeight/1080*14)
 edgettsgui.MarginX := 3
 edgettsgui.MarginY := 5
 edgettsgui.Opt("+OwnDialogs")
@@ -210,10 +216,11 @@ edgetts_save_model(*) {
 ; ******************************************************************
 
 ; ****************************命令行*****************************
-edgettsgui.AddGroupBox("xs w950 h50")
+edgettsgui.AddGroupBox("xs w950 h100")
 ;预警，tts测试用长文本！！！！！！！！！！
-edgettsgui.AddEdit("xp10 yp15 w800  vscroll h30 ReadOnly", '"edge-playback -t "欢迎体验 TTS 音质测试！123，do re mi，一二三，走起～        多音字测试：银行门口，他行色匆匆。        儿化音：这儿有份儿小吃，味儿倍儿棒！        轻声与停顿：好的，我们——稍等，马上回来。        连续语流：四是四，十是十，十四是十四，四十是四十。        数字+单位：2025年9月20日，气温24.5℃，风速3.2m/s。        英文缩写：USB、AI、TTS、NASA，读得清楚吗？        标点语气：真的？假的！哦……原来如此。        长句挑战：他指出，尽管当前全球经济复苏仍面临诸多不确定因素，但各国通过加强多边合作、推动绿色转型，有望实现更加包容和可持续的增长。        情绪模拟：（平静）今天天气不错。（兴奋）哇！彩虹！（悲伤）可惜，它转瞬即逝……        结尾测试：谢谢聆听，再见！Goodbye～" -v zh-CN-XiaochenMultilingualNeural"') ;edit 3
-edgettsgui.AddButton("w120 yp hp", "编辑命令行")
+edgettsgui.AddEdit("xp10 yp15 w800  vscroll h80 ReadOnly", edgetts_playstr)
+edgettsgui.AddText("w60 yp30 hp xp810    0x1 ", "使用命令行") ;照例0x220是垂直居中的意思。
+edgettsgui.AddButton("w60 yp-30 xp60  hp", "运行").OnEvent() ;需要能够返回错误信息。
 
 
 edgettsgui.Show("h600 w1000")
